@@ -1,0 +1,5 @@
+oracle-java7-installer	shared/present-oracle-license-v1-1	note	
+oracle-java7-installer	shared/accepted-oracle-license-v1-1	boolean	true
+oracle-java7-installer	oracle-java7-installer/not_exist	error	
+oracle-java7-installer	shared/error-oracle-license-v1-1	error	
+oracle-java7-installer	oracle-java7-installer/local	string	

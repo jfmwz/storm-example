@@ -1,0 +1,7 @@
+storm.version: storm-0.8.2
+zeromq.version: zeromq-2.1.7
+
+# options are oracle-jdk, openjdk
+jdk.vendor: openjdk
+# options are 6, 7, 8
+jdk.version: 7

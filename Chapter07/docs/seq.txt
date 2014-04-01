@@ -1,0 +1,30 @@
+title Storm:Druid Integration
+
+participant Storm
+participant DruidState
+participant StormFirehose
+participant Druid
+participant "Zookeeper\n(via BatchState)" as Zookeeper
+
+Storm->DruidState : row1
+Storm->DruidState : row2
+Druid -> StormFirehose: hasMore?
+note right of StormFirehose: BLOCK
+Storm->DruidState : row3
+Storm->DruidState : commit
+DruidState->Zookeeper:putInProgress(txId)
+DruidState->StormFirehose : notify(UNBLOCK)
+note right of DruidState: BLOCK
+Druid->+StormFirehose : nextRow
+StormFirehose-->-Druid : row1
+Druid->+StormFirehose : nextRow
+StormFirehose-->-Druid : row2
+Druid->+StormFirehose : nextRow
+StormFirehose-->-Druid : row3
+StormFirehose->Zookeeper: putInLimbo(txId)
+StormFirehose->DruidState: notify(UNBLOCK)
+Druid->+StormFirehose: commit()
+StormFirehose-->-Druid: Runnable
+Druid->Runnable: run
+Runnable->Zookeeper: complete(txId)
+

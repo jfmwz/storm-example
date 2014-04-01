@@ -1,0 +1,33 @@
+{
+  "dataSource": "historical",
+  "timestampColumn": "utcdt",
+  "timestampFormat": "iso",
+  "dataSpec": {
+    "format": "json",
+    "dimensions": ["searchphrase", "word"]
+  },
+  "granularitySpec": {
+    "type":"uniform",
+    "intervals":["2013-08-28T04/PT1H"],
+    "gran":"hour"
+  },
+  "pathSpec": { "type": "static",
+                "paths": "/Users/bone/git/boneill42/storm-blueprints/Chapter8/nlp.json" },
+  "rollupSpec": { 
+                  "aggs": [ { "type": "count", "name": "wordcount" },
+                            { "type": "max", "fieldName": "baseline", "name" : "maxbaseline" } ],
+                  "rollupGranularity": "minute"},
+  "workingPath": "/tmp/working_path",
+  "segmentOutputPath": "/tmp/segments",
+  "leaveIntermediate": "false",
+  "partitionsSpec": {
+    "targetPartitionSize": 5000
+  },
+  "updaterJobSpec": {
+    "type":"db",
+    "connectURI":"jdbc:mysql://localhost:3306/druid",
+    "user":"druid",
+    "password":"druid",
+    "segmentTable":"prod_segments"
+  }
+}

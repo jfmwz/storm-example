@@ -1,0 +1,16 @@
+storm.nimbus.host: localhost
+
+storm.zookeeper.servers:
+     - localhost
+     
+storm.supervisor.slots.ports:
+     - 6700
+     - 6701
+     - 6702
+     - 6703
+     - 6705
+
+
+classes:
+    - zookeeper
+    - storm

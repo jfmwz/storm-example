@@ -1,0 +1,18 @@
+{
+     "queryType": "groupBy",
+     "dataSource": "stockinfo",
+     "granularity": "minute",
+     "dimensions": ["symbol"],
+     "aggregations":[
+        { "type": "longSum", "fieldName": "orders", "name": "cumulativeCount"},
+        { "type": "doubleSum", "fieldName": "totalPrice", "name": "cumulativePrice" }
+     ],
+     "postAggregations":[
+     {  "type":"arithmetic",
+        "name":"avg_price",
+        "fn":"/",
+        "fields":[ {"type":"fieldAccess","name":"avgprice","fieldName":"cumulativePrice"},
+                   {"type":"fieldAccess","name":"numrows","fieldName":"cumulativeCount"}]}
+     ],
+     "intervals":["2012-10-01T00:00/2020-01-01T00"]
+ }

@@ -1,0 +1,20 @@
+{
+     "queryType": "groupBy",
+     "dataSource": "nlp",
+     "granularity": "minute",
+     "dimensions": ["searchphrase", "word"],
+     "aggregations":[
+        { "type": "longSum", "fieldName":"wordcount", "name": "totalcount"},
+        { "type": "max", "fieldName":"maxbaseline", "name": "totalbaseline"}
+     ],
+     "postAggregations": [{
+       "type": "arithmetic",
+       "name": "relevance",
+       "fn": "/",
+       "fields": [
+            { "type": "fieldAccess", "fieldName": "totalcount" },
+            { "type": "fieldAccess", "fieldName": "totalbaseline" }
+       ]
+     }],
+     "intervals":["2012-10-01T00:00/2020-01-01T00"]
+ }
